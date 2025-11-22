@@ -62,9 +62,9 @@ export const Sidebar = () => {
 
         {/* Opción 2: Productos (Inventario) */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => alert("Próximamente: Productos")}>
-            <ListItemIcon> <InventoryIcon sx={{ color: "white" }} /> </ListItemIcon>
-            <ListItemText primary="Productos" />
+          <ListItemButton onClick={() => navigate("/productos")}>
+              <ListItemIcon> <InventoryIcon sx={{ color: "white" }} /> </ListItemIcon>
+              <ListItemText primary="Productos" />
           </ListItemButton>
         </ListItem>
 

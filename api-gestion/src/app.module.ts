@@ -7,6 +7,10 @@ import { EmpresaModule } from './empresa/empresa.module';
 import { RolModule } from './rol/rol.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductoModule } from './producto/producto.module';
+import { SucursalModule } from './sucursal/sucursal.module';
+import { ProveedorModule } from './proveedor/proveedor.module';
+import { StockModule } from './stock/stock.module';
 
 @Module({
   imports: [
@@ -20,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER || 'postgres',
       // ACA ESTA EL CAMBIO IMPORTANTE:
       password: process.env.DB_PASSWORD || 'admin', // <--- Agregamos esto
-      database: process.env.DB_NAME || 'gestion_db',
+      database: process.env.DB_NAME || 'ferreteria_db',
       autoLoadEntities:true,
       synchronize: true,
     }),
@@ -28,6 +32,10 @@ import { AuthModule } from './auth/auth.module';
     RolModule,
     UsuarioModule,
     AuthModule,
+    ProductoModule,
+    SucursalModule,
+    ProveedorModule,
+    StockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
