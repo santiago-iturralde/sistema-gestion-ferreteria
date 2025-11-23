@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Container, TextField, Typography, Paper, MenuItem } from "@mui/material";
+import { 
+  Box, Button, Container, TextField, Typography, Paper, MenuItem, 
+  InputAdornment, IconButton, Dialog, DialogTitle, DialogContent 
+} from "@mui/material";
+import { CameraAlt } from "@mui/icons-material"; // <--- Icono de cámara
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom"; // <--- Agregamos useParams para leer la URL
+import { useNavigate, useParams } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar";
+import { Scanner } from "../components/Scanner"; // <--- Importamos el Scanner que creamos antes
 
 export const NuevoProducto = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // <--- Capturamos el ID de la URL (si existe)
+  const { id } = useParams();
   const [proveedores, setProveedores] = useState([]);
-  const [editando, setEditando] = useState(false); // Bandera para saber modo
+  const [editando, setEditando] = useState(false);
+
+  // --- ESTADO PARA LA CÁMARA ---
+  const [mostrarScanner, setMostrarScanner] = useState(false);
 
   const [form, setForm] = useState({
     nombre: "",
@@ -20,24 +28,21 @@ export const NuevoProducto = () => {
     id_proveedor: ""
   });
 
-  // 1. Cargar Proveedores y Datos del Producto (si es edición)
+  // 1. Cargar Proveedores y Datos
   useEffect(() => {
     const cargarDatos = async () => {
       const token = localStorage.getItem("token");
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
       try {
-        // A. Cargar lista de proveedores siempre
         const resProv = await axios.get("http://localhost:3000/proveedor", config);
         setProveedores(resProv.data);
 
-        // B. Si hay ID, cargar los datos del producto para editar
         if (id) {
           setEditando(true);
           const resProd = await axios.get(`http://localhost:3000/producto/${id}`, config);
           const p = resProd.data;
           
-          // Rellenar el formulario con lo que vino del backend
           setForm({
             nombre: p.nombre,
             descripcion: p.descripcion || "",
@@ -53,20 +58,23 @@ export const NuevoProducto = () => {
       }
     };
     cargarDatos();
-  }, [id]); // Se ejecuta cuando cambia el ID
+  }, [id]);
 
-  // 2. Manejar cambios en inputs
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 3. Guardar (Crear o Actualizar)
+  // --- FUNCIÓN: CUANDO LA CÁMARA LEE EL CÓDIGO ---
+  const handleScanSuccess = (codigo: string) => {
+    setForm({ ...form, cod_barras: codigo }); // Escribe el código en el input
+    setMostrarScanner(false); // Cierra la cámara
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const config = { headers: { Authorization: `Bearer ${token}` } };
     
-    // Preparamos el objeto a enviar
     const data = {
       nombre: form.nombre,
       descripcion: form.descripcion,
@@ -80,11 +88,9 @@ export const NuevoProducto = () => {
 
     try {
       if (editando) {
-        // MODO EDICIÓN: Usamos PUT o PATCH y la URL con ID
         await axios.patch(`http://localhost:3000/producto/${id}`, data, config);
         alert("¡Producto actualizado correctamente!");
       } else {
-        // MODO CREACIÓN: Usamos POST
         await axios.post("http://localhost:3000/producto", data, config);
         alert("¡Producto creado correctamente!");
       }
@@ -101,7 +107,6 @@ export const NuevoProducto = () => {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Container maxWidth="md">
           <Paper elevation={3} sx={{ p: 4 }}>
-            {/* Título dinámico */}
             <Typography variant="h5" mb={3}>
               {editando ? "Editar Producto" : "Nuevo Producto"}
             </Typography>
@@ -120,10 +125,25 @@ export const NuevoProducto = () => {
                 />
 
                 <Box display="flex" gap={2}>
+                  {/* --- INPUT DE CÓDIGO DE BARRAS CON CÁMARA --- */}
                   <TextField 
-                    fullWidth label="Código de Barras" name="cod_barras" 
-                    value={form.cod_barras} onChange={handleChange} sx={{ flex: 1 }} 
+                    fullWidth 
+                    label="Código de Barras" 
+                    name="cod_barras" 
+                    value={form.cod_barras} 
+                    onChange={handleChange} 
+                    sx={{ flex: 1 }} 
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setMostrarScanner(true)} color="primary">
+                            <CameraAlt />
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
                   />
+
                   <TextField 
                     fullWidth select label="Proveedor *" name="id_proveedor" 
                     value={form.id_proveedor} onChange={handleChange} required sx={{ flex: 1 }}
@@ -158,6 +178,18 @@ export const NuevoProducto = () => {
 
               </Box>
             </form>
+
+            {/* --- VENTANA EMERGENTE DEL SCANNER --- */}
+            <Dialog open={mostrarScanner} onClose={() => setMostrarScanner(false)}>
+              <DialogTitle>Escanear Código</DialogTitle>
+              <DialogContent>
+                {mostrarScanner && <Scanner onScan={handleScanSuccess} />}
+                <Button onClick={() => setMostrarScanner(false)} color="error" fullWidth sx={{ mt: 2 }}>
+                  Cancelar
+                </Button>
+              </DialogContent>
+            </Dialog>
+
           </Paper>
         </Container>
       </Box>

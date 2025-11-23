@@ -16,7 +16,7 @@ export class Stock {
   sucursal: Sucursal;
 
   // Relación: Stock pertenece a un Producto
-  @ManyToOne(() => Producto)
+  @ManyToOne(() => Producto, (producto) => producto.stocks) 
   @JoinColumn({ name: 'id_producto' })
   producto: Producto;
 }

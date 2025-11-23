@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
-import { Productos } from "./pages/Productos"; // <--- Importar
-import { NuevoProducto } from "./pages/NuevoProducto"; // <--- Importar
+import { Productos } from "./pages/Productos"; 
+import { NuevoProducto } from "./pages/NuevoProducto"; 
+import { ActualizarStock } from "./pages/ActualizarStock";
+import { SeleccionarProducto } from "./pages/SeleccionarProducto";
 
 
 // El componente de seguridad
@@ -31,6 +33,12 @@ function App() {
 
         {/* Ruta para EDITAR (Con ID variable) */}
         <Route path="/productos/editar/:id" element={<RutaPrivada><NuevoProducto /></RutaPrivada>} />
+
+        {/* NUEVA RUTA DE STOCK */}
+        <Route path="/stock/actualizar/:id" element={<RutaPrivada><ActualizarStock /></RutaPrivada>} />
+
+        {/* Ruta Intermedia: Buscar para ajustar */}
+        <Route path="/stock/seleccion" element={<RutaPrivada><SeleccionarProducto /></RutaPrivada>} />
 
       </Routes>
     </BrowserRouter>

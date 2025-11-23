@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne,OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Empresa } from '../../empresa/entities/empresa.entity';
 import { Proveedor } from '../../proveedor/entities/proveedor.entity';
+import { Stock } from '../../stock/entities/stock.entity';
 
 @Entity('producto')
 export class Producto {
@@ -37,4 +38,7 @@ export class Producto {
   @ManyToOne(() => Proveedor)
   @JoinColumn({ name: 'id_proveedor' })
   proveedor: Proveedor;
+
+  @OneToMany(() => Stock, (stock) => stock.producto)
+  stocks: Stock[];
 }

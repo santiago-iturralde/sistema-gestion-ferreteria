@@ -19,8 +19,13 @@ export class ProductoService {
 
   findAll() {
     return this.productoRepo.find({
-      where: { activo: true }, // Solo trae los que no están borrados
-      relations: ['empresa', 'proveedor'] 
+      where: { activo: true },
+      relations: [
+        'empresa', 
+        'proveedor', 
+        'stocks',           // Trae la cantidad
+        'stocks.sucursal'   // <--- ESTA ES LA CLAVE: Trae el nombre del lugar
+      ] 
     });
   }
 
@@ -28,7 +33,7 @@ export class ProductoService {
   async findOne(id: number) {
     const producto = await this.productoRepo.findOne({
       where: { id_producto: id },
-      relations: ['empresa', 'proveedor'] // Traemos los datos relacionados
+      relations: ['empresa', 'proveedor', 'stocks', 'stocks.sucursal']
     });
     return producto;
   }

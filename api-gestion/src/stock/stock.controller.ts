@@ -12,6 +12,11 @@ export class StockController {
     return this.stockService.create(createStockDto);
   }
 
+  @Post('actualizar') // La ruta será: POST /stock/actualizar
+  actualizar(@Body() body: { id_producto: number; id_sucursal: number; cantidad: number }) {
+    return this.stockService.actualizarStock(body.id_producto, body.id_sucursal, body.cantidad);
+  }
+
   @Get()
   findAll() {
     return this.stockService.findAll();
