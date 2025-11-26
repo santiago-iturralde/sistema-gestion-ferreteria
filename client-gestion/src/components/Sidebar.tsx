@@ -1,5 +1,3 @@
-//clase del menu principal desplegable del dashboard
-
 import { 
   Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, 
   Box, Typography, Divider, Button 
@@ -9,18 +7,26 @@ import {
   Inventory as InventoryIcon, 
   ShoppingCart as ShoppingCartIcon, 
   Group as GroupIcon,
-  ExitToApp as LogoutIcon 
+  ExitToApp as LogoutIcon,
+  ReceiptLong as ReceiptLongIcon,
+  Person as PersonIcon
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { LocalShipping } from "@mui/icons-material";
 
 export const Sidebar = () => {
   const navigate = useNavigate();
   const usuario = localStorage.getItem("usuario") || "Usuario";
-  const anchoMenu = 240; // Ancho del menú en píxeles
+  
+  // LEEMOS EL ROL DEL LOCALSTORAGE
+  const rolUsuario = Number(localStorage.getItem("rol"));
+  // Validamos: ¿Es Admin (ID 1)?
+  const esAdmin = rolUsuario === 1;
+
+  const anchoMenu = 240;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("usuario");
+    localStorage.clear(); // Borramos todo al salir
     navigate("/login");
   };
 
@@ -33,12 +39,11 @@ export const Sidebar = () => {
         "& .MuiDrawer-paper": {
           width: anchoMenu,
           boxSizing: "border-box",
-          backgroundColor: "#1e1e2d", // Color oscuro profesional
+          backgroundColor: "#1e1e2d", 
           color: "#ffffff",
         },
       }}
     >
-      {/* Cabecera del Menú */}
       <Box p={3} textAlign="center">
         <Typography variant="h6" fontWeight="bold">
           GESTIÓN PRO
@@ -46,13 +51,15 @@ export const Sidebar = () => {
         <Typography variant="caption" color="gray">
           {usuario}
         </Typography>
+        {/* Etiqueta visual para saber qué soy */}
+        <Typography variant="caption" display="block" color="cyan" mt={1}>
+           {esAdmin ? "ADMINISTRADOR" : "VENDEDOR"}
+        </Typography>
       </Box>
       
       <Divider sx={{ backgroundColor: "gray" }} />
 
-      {/* Lista de Opciones */}
       <List>
-        {/* Opción 1: Dashboard */}
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate("/")}>
             <ListItemIcon> <DashboardIcon sx={{ color: "white" }} /> </ListItemIcon>
@@ -60,7 +67,6 @@ export const Sidebar = () => {
           </ListItemButton>
         </ListItem>
 
-        {/* Opción 2: Productos (Inventario) */}
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate("/productos")}>
               <ListItemIcon> <InventoryIcon sx={{ color: "white" }} /> </ListItemIcon>
@@ -68,24 +74,50 @@ export const Sidebar = () => {
           </ListItemButton>
         </ListItem>
 
-        {/* Opción 3: Ventas */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => alert("Próximamente: Ventas")}>
+          <ListItemButton onClick={() => navigate("/venta")}>
             <ListItemIcon> <ShoppingCartIcon sx={{ color: "white" }} /> </ListItemIcon>
             <ListItemText primary="Ventas" />
           </ListItemButton>
         </ListItem>
 
-        {/* Opción 4: Usuarios (Solo debería verlo el Admin) */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => alert("Próximamente: Usuarios")}>
-            <ListItemIcon> <GroupIcon sx={{ color: "white" }} /> </ListItemIcon>
-            <ListItemText primary="Usuarios" />
+          <ListItemButton onClick={() => navigate("/ventas/historial")}>
+            <ListItemIcon> <ReceiptLongIcon sx={{ color: "white" }} /> </ListItemIcon>
+            <ListItemText primary="Historial de ventas" />
           </ListItemButton>
         </ListItem>
+
+        {/* --- NUEVO BOTÓN CLIENTES --- */}
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate ("/clientes")}>
+              <ListItemIcon> <PersonIcon sx={{ color: "white" }} /> </ListItemIcon>
+              <ListItemText primary="Clientes / Deudas" />
+          </ListItemButton>
+        </ListItem>
+
+        {/* --- CONDICIONAL: Solo mostramos Usuarios si es Admin --- */}
+        {esAdmin && (
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => navigate("/usuarios")}>
+              <ListItemIcon> <GroupIcon sx={{ color: "white" }} /> </ListItemIcon>
+              <ListItemText primary="Usuarios" />
+            </ListItemButton>
+          </ListItem>
+        )}
+
+        {esAdmin && (
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate("/compras")}>
+          <ListItemIcon> <LocalShipping sx={{ color: "white" }} /> </ListItemIcon>
+        <ListItemText primary="Compras y Stock" />
+        </ListItemButton>
+        </ListItem>
+        )}
+
+
       </List>
 
-      {/* Botón de Salir al final */}
       <Box mt="auto" p={2}>
         <Button 
           variant="contained" 

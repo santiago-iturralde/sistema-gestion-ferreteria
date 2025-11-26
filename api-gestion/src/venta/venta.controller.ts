@@ -1,0 +1,18 @@
+import { Controller, Get, Post, Body } from '@nestjs/common';
+import { VentaService } from './venta.service';
+import { CreateVentaDto } from './dto/create-venta.dto';
+
+@Controller('venta')
+export class VentaController {
+  constructor(private readonly ventaService: VentaService) {}
+
+  @Post()
+  create(@Body() createVentaDto: CreateVentaDto) {
+    return this.ventaService.create(createVentaDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.ventaService.findAll();
+  }
+}

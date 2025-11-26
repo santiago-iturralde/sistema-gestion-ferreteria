@@ -5,7 +5,11 @@ import { Productos } from "./pages/Productos";
 import { NuevoProducto } from "./pages/NuevoProducto"; 
 import { ActualizarStock } from "./pages/ActualizarStock";
 import { SeleccionarProducto } from "./pages/SeleccionarProducto";
-
+import { Venta } from "./pages/Venta";
+import { ReporteVentas } from "./pages/ReporteVentas";
+import { Usuarios } from "./pages/Usuarios"; // Importar
+import { Compras } from "./pages/Compras";
+import { Clientes } from "./pages/Clientes";
 
 // El componente de seguridad
 const RutaPrivada = ({ children }: { children: any }) => {
@@ -39,6 +43,17 @@ function App() {
 
         {/* Ruta Intermedia: Buscar para ajustar */}
         <Route path="/stock/seleccion" element={<RutaPrivada><SeleccionarProducto /></RutaPrivada>} />
+
+        <Route path="/venta" element={<RutaPrivada><Venta /></RutaPrivada>} />
+
+        {/* Ruta de Historial */}
+        <Route path="/ventas/historial" element={<RutaPrivada><ReporteVentas /></RutaPrivada>} />
+
+        <Route path="/usuarios" element={<RutaPrivada><Usuarios /></RutaPrivada>} />
+
+        <Route path="/compras" element={<RutaPrivada><Compras /></RutaPrivada>} />
+
+        <Route path="/clientes" element={<RutaPrivada><Clientes /></RutaPrivada>} />
 
       </Routes>
     </BrowserRouter>

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { 
-  Box, Button, Container, Paper, Table, TableBody, TableCell, 
+  Box, Button, Container, Paper, Table, TableBody, TableCell, // <--- AHORA SÍ ESTÁ EL BUTTON
   TableContainer, TableHead, TableRow, Typography, IconButton, 
   TextField, InputAdornment, Chip, Stack, Dialog, DialogContent, DialogTitle 
 } from "@mui/material"; 
-import { Add, Delete, Edit, Search, Store, Warehouse, Inventory, CameraAlt } from "@mui/icons-material"; 
+import { Delete, Edit, Search, Store, Warehouse, CameraAlt } from "@mui/icons-material"; 
 import axios from "axios";
 import { Sidebar } from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
-import { Scanner } from "../components/Scanner"; // <--- Importamos nuestro Scanner
+import { Scanner } from "../components/Scanner"; 
 
 export const Productos = () => {
   const navigate = useNavigate();
@@ -65,31 +65,9 @@ export const Productos = () => {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Container maxWidth="lg">
           
-          {/* CABECERA CON DOS BOTONES */}
+          {/* CABECERA LIMPIA (Solo Título) */}
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-            <Typography variant="h4">Inventario</Typography>
-            
-            <Box>
-              {/* BOTÓN: AJUSTAR STOCK */}
-              <Button 
-                variant="outlined" 
-                color="success" 
-                startIcon={<Inventory />} 
-                onClick={() => navigate("/stock/seleccion")} 
-                sx={{ mr: 2 }}
-              >
-                Ajustar Stock
-              </Button>
-
-              {/* BOTÓN: NUEVO PRODUCTO */}
-              <Button 
-                variant="contained" 
-                startIcon={<Add />} 
-                onClick={() => navigate("/productos/nuevo")}
-              >
-                Nuevo Producto
-              </Button>
-            </Box>
+            <Typography variant="h4" fontWeight="bold">Inventario</Typography>
           </Box>
 
           {/* BARRA DE BÚSQUEDA + CÁMARA */}

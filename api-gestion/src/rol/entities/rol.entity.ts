@@ -1,12 +1,14 @@
-import { Column, Entity,PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('rol')
-export class Rol{
-    @PrimaryGeneratedColumn()
+export class Rol {
+    // Agregamos { name: 'id_rol' } para asegurar que lea esa columna
+    @PrimaryGeneratedColumn({ name: 'id_rol' })
     id_rol: number;
 
-    @Column({ type: 'varchar', length: 50 })
-    nombre_rol: string; // Ej: 'ADMIN', 'CAJERO'
+    // Agregamos { name: 'nombre_rol' }
+    @Column({ name: 'nombre_rol', type: 'varchar', length: 50 })
+    nombre_rol: string; 
 
     @Column({ type: 'varchar', nullable: true })
     descripcion: string;

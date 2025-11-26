@@ -11,6 +11,10 @@ import { ProductoModule } from './producto/producto.module';
 import { SucursalModule } from './sucursal/sucursal.module';
 import { ProveedorModule } from './proveedor/proveedor.module';
 import { StockModule } from './stock/stock.module';
+import { VentaModule } from './venta/venta.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { CompraModule } from './compra/compra.module';
+import { ClienteModule } from './cliente/cliente.module';
 
 @Module({
   imports: [
@@ -36,6 +40,10 @@ import { StockModule } from './stock/stock.module';
     SucursalModule,
     ProveedorModule,
     StockModule,
+    VentaModule,
+    DashboardModule,
+    CompraModule,
+    ClienteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
