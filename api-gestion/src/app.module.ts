@@ -23,6 +23,7 @@ import { ClienteModule } from './cliente/cliente.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
+      url: process.env.DATABASE_URL,
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT || '5432'),
       username: process.env.DB_USER || 'postgres',
@@ -31,6 +32,7 @@ import { ClienteModule } from './cliente/cliente.module';
       database: process.env.DB_NAME || 'ferreteria_db',
       autoLoadEntities:true,
       synchronize: true,
+      ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
     }),
     EmpresaModule,
     RolModule,
