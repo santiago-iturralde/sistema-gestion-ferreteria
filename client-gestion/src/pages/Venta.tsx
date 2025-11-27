@@ -39,9 +39,9 @@ export const Venta = () => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       try {
         const [resProd, resSuc, resCli] = await Promise.all([
-            axios.get("http://localhost:3000/producto", config),
-            axios.get("http://localhost:3000/sucursal", config),
-            axios.get("http://localhost:3000/cliente", config) 
+            axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/producto", config),
+            axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/sucursal", config),
+            axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/cliente", config) 
         ]);
 
         setProductos(resProd.data);
@@ -114,7 +114,7 @@ export const Venta = () => {
         }))
       };
 
-      const resVenta = await axios.post("http://localhost:3000/venta", ventaData, {
+      const resVenta = await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/venta", ventaData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -138,8 +138,8 @@ export const Venta = () => {
       setIdCliente(""); 
       setMetodoPago("Efectivo"); 
 
-      const resProd = await axios.get("http://localhost:3000/producto", { headers: { Authorization: `Bearer ${token}` } });
-      const resCli = await axios.get("http://localhost:3000/cliente", { headers: { Authorization: `Bearer ${token}` } });
+      const resProd = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/producto", { headers: { Authorization: `Bearer ${token}` } });
+      const resCli = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/cliente", { headers: { Authorization: `Bearer ${token}` } });
       setProductos(resProd.data);
       setClientes(resCli.data);
 

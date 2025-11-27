@@ -19,7 +19,7 @@ export const ReporteVentas = () => {
     const cargarVentas = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/venta", {
+        const res = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/venta", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setVentas(res.data);

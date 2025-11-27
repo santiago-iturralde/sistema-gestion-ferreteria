@@ -21,7 +21,7 @@ export const Productos = () => {
   const cargarProductos = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3000/producto", {
+      const response = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/producto", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProductos(response.data);
@@ -36,7 +36,7 @@ export const Productos = () => {
     if (window.confirm("¿Estás seguro de que querés eliminar este producto?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:3000/producto/${id}`, {
+        await axios.delete(`https://sistema-gestion-ferreteria-demo.onrender.com/producto/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         cargarProductos(); 

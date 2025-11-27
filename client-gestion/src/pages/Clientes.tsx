@@ -22,7 +22,7 @@ export const Clientes = () => {
   const cargarClientes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/cliente", {
+      const res = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/cliente", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setClientes(res.data);
@@ -35,7 +35,7 @@ export const Clientes = () => {
   const handleCrear = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:3000/cliente", form, {
+      await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/cliente", form, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOpenModal(false);
@@ -49,7 +49,7 @@ export const Clientes = () => {
     if(window.confirm("¿Borrar cliente?")) {
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://localhost:3000/cliente/${id}`, {
+            await axios.delete(`https://sistema-gestion-ferreteria-demo.onrender.com/cliente/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             cargarClientes();
@@ -69,7 +69,7 @@ export const Clientes = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:3000/cliente/pagar", {
+      await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/cliente/pagar", {
         id_cliente: pagoForm.id_cliente,
         monto: Number(pagoForm.monto)
       }, {

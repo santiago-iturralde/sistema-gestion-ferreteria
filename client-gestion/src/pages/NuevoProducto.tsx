@@ -35,12 +35,12 @@ export const NuevoProducto = () => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
       try {
-        const resProv = await axios.get("http://localhost:3000/proveedor", config);
+        const resProv = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/proveedor", config);
         setProveedores(resProv.data);
 
         if (id) {
           setEditando(true);
-          const resProd = await axios.get(`http://localhost:3000/producto/${id}`, config);
+          const resProd = await axios.get(`https://sistema-gestion-ferreteria-demo.onrender.com/producto/${id}`, config);
           const p = resProd.data;
           
           setForm({
@@ -88,10 +88,10 @@ export const NuevoProducto = () => {
 
     try {
       if (editando) {
-        await axios.patch(`http://localhost:3000/producto/${id}`, data, config);
+        await axios.patch(`https://sistema-gestion-ferreteria-demo.onrender.com/producto/${id}`, data, config);
         alert("¡Producto actualizado correctamente!");
       } else {
-        await axios.post("http://localhost:3000/producto", data, config);
+        await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/producto", data, config);
         alert("¡Producto creado correctamente!");
       }
       navigate("/productos");

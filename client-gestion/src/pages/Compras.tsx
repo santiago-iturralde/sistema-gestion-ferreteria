@@ -59,10 +59,10 @@ export const Compras = () => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
       const [resCompras, resProv, resSuc, resProd] = await Promise.all([
-        axios.get("http://localhost:3000/compra", config),
-        axios.get("http://localhost:3000/proveedor", config),
-        axios.get("http://localhost:3000/sucursal", config),
-        axios.get("http://localhost:3000/producto", config)
+        axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/compra", config),
+        axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/proveedor", config),
+        axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/sucursal", config),
+        axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/producto", config)
       ]);
 
       setCompras(resCompras.data);
@@ -96,7 +96,7 @@ export const Compras = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:3000/compra", {
+      await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/compra", {
         id_proveedor: Number(compraForm.id_proveedor),
         id_sucursal: Number(compraForm.id_sucursal),
         id_usuario: 1, 
@@ -121,7 +121,7 @@ export const Compras = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post("http://localhost:3000/producto", {
+      const res = await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/producto", {
         nombre: prodForm.nombre,
         cod_barras: prodForm.codigo, // Usamos cod_barras como en tu NuevoProducto.tsx
         precio_venta: Number(prodForm.precio_venta),
@@ -136,7 +136,7 @@ export const Compras = () => {
 
       alert("Producto creado!");
       
-      const resProd = await axios.get("http://localhost:3000/producto", { headers: { Authorization: `Bearer ${token}` } });
+      const resProd = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/producto", { headers: { Authorization: `Bearer ${token}` } });
       const nuevosProductos = resProd.data;
       setProductos(nuevosProductos);
 
@@ -162,7 +162,7 @@ export const Compras = () => {
   const guardarProveedor = async () => { 
       try {
         const token = localStorage.getItem("token");
-        await axios.post("http://localhost:3000/proveedor", { ...provForm, empresa: 1 }, {
+        await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/proveedor", { ...provForm, empresa: 1 }, {
             headers: { Authorization: `Bearer ${token}` }
         });
         alert("Proveedor guardado");
@@ -173,7 +173,7 @@ export const Compras = () => {
   const guardarSucursal = async () => { 
       try {
         const token = localStorage.getItem("token");
-        await axios.post("http://localhost:3000/sucursal", { ...sucForm, empresa: 1 }, {
+        await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/sucursal", { ...sucForm, empresa: 1 }, {
             headers: { Authorization: `Bearer ${token}` }
         });
         alert("Sucursal guardada");

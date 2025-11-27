@@ -25,11 +25,11 @@ export const ActualizarStock = () => {
 
       try {
         // 1. Traemos el nombre del producto para mostrarlo
-        const resProd = await axios.get(`http://localhost:3000/producto/${id}`, config);
+        const resProd = await axios.get(`https://sistema-gestion-ferreteria-demo.onrender.com/producto/${id}`, config);
         setProducto(resProd.data);
 
         // 2. Traemos las sucursales para el desplegable
-        const resSuc = await axios.get("http://localhost:3000/sucursal", config);
+        const resSuc = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/sucursal", config);
         setSucursales(resSuc.data);
       } catch (error) {
         console.error("Error cargando datos", error);
@@ -42,7 +42,7 @@ export const ActualizarStock = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:3000/stock/actualizar", {
+      await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/stock/actualizar", {
         id_producto: Number(id),
         id_sucursal: Number(form.id_sucursal),
         cantidad: Number(form.cantidad)

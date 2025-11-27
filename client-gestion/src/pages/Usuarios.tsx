@@ -22,7 +22,7 @@ export const Usuarios = () => {
   const cargarUsuarios = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/usuario", {
+      const res = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/usuario", {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Diagnóstico en consola (ahora deberías ver 'nombre_rol' aquí)
@@ -40,7 +40,7 @@ export const Usuarios = () => {
   const handleCrear = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:3000/usuario", {
+      await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/usuario", {
         nombre: form.nombre,
         email: form.email,
         password: form.password,
@@ -64,7 +64,7 @@ export const Usuarios = () => {
     if (window.confirm("¿Seguro querés eliminar a este usuario?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:3000/usuario/${id}`, {
+        await axios.delete(`https://sistema-gestion-ferreteria-demo.onrender.com/usuario/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         cargarUsuarios();

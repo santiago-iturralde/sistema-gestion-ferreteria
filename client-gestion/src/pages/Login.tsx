@@ -15,7 +15,7 @@ export const Login = () => {
     setError(""); 
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post("https://sistema-gestion-ferreteria-demo.onrender.com/auth/login", {
         email: email,
         password: password,
       });

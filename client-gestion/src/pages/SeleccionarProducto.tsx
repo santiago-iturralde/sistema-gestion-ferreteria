@@ -18,7 +18,7 @@ export const SeleccionarProducto = () => {
     const cargarProductos = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/producto", {
+        const res = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/producto", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProductos(res.data);

@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { RegisterAuthDto } from './dto/create-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 
-@Controller('auth') // Esto define la ruta base: http://localhost:3000/auth
+@Controller('auth') // Esto define la ruta base: https://sistema-gestion-ferreteria-demo.onrender.com/auth
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

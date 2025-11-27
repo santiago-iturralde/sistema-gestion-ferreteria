@@ -21,7 +21,7 @@ export const Dashboard = () => {
     const cargarDashboard = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/dashboard", {
+        const res = await axios.get("https://sistema-gestion-ferreteria-demo.onrender.com/dashboard", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setDatos(res.data);
