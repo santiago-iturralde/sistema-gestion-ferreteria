@@ -250,7 +250,7 @@ export const Compras = () => {
                   sx={{ flex: 2 }}
                   value={itemForm.productoSeleccionado}
                   
-                  onChange={(event, newValue) => {
+                  onChange={(_, newValue) => {
                     if (newValue && newValue.inputValue) {
                         // SI ES NUEVO: Abrimos modal para crear
                         setOpenNuevoProd(true);

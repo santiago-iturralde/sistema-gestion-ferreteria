@@ -24,7 +24,7 @@ export const Scanner = ({ onScan }: ScannerProps) => {
       onScan(decodedText);
     };
 
-    const error = (err: any) => { 
+    const error = (_err: any) => { 
       // console.warn(err); // Comentado para que no ensucie la consola
     };
 
