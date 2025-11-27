@@ -21,19 +21,41 @@ import { ClienteModule } from './cliente/cliente.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      url: process.env.DATABASE_URL,
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      username: process.env.DB_USER || 'postgres',
-      // ACA ESTA EL CAMBIO IMPORTANTE:
-      password: process.env.DB_PASSWORD || 'admin', // <--- Agregamos esto
-      database: process.env.DB_NAME || 'ferreteria_db',
-      autoLoadEntities:true,
-      synchronize: true,
-      ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+    
+    TypeOrmModule.forRootAsync({
+      useFactory: () => {
+        // Detectamos si estamos en la nube
+        const isProd = process.env.DATABASE_URL;
+
+        if (isProd) {
+          console.log("🚀 MODO NUBE DETECTADO: Conectando a Neon...");
+          return {
+            type: 'postgres',
+            url: process.env.DATABASE_URL,
+            autoLoadEntities: true,
+            synchronize: true,
+            ssl: { rejectUnauthorized: false }, 
+          };
+        } else {
+          console.log("🏠 MODO LOCAL DETECTADO: Conectando a tu PC...");
+          return {
+            type: 'postgres',
+            host: process.env.DB_HOST || 'localhost',
+            
+            // --- AQUÍ ESTABA EL ERROR, ASÍ SE ARREGLA: ---
+            port: parseInt(process.env.DB_PORT || '5432'), 
+            // ---------------------------------------------
+            
+            username: process.env.DB_USER || 'postgres',
+            password: process.env.DB_PASSWORD || 'root', // Cambiá 'root' por tu pass local si es distinto
+            database: process.env.DB_NAME || 'ferreteria_db',
+            autoLoadEntities: true,
+            synchronize: true,
+          };
+        }
+      },
     }),
+
     EmpresaModule,
     RolModule,
     UsuarioModule,
